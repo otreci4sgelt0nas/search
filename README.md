@@ -17,6 +17,7 @@ No installation is required beyond having Python installed on your system. This 
 
 To use the script, navigate to the directory containing `search.py` and run it with Python, followed by the options and search string you wish to use.
 
+`python search.py [options] <search_string>`
 
 ### Options
 
@@ -28,6 +29,7 @@ To use the script, navigate to the directory containing `search.py` and run it w
 
 To search for all Excel files with a date format (YYYY-MM-DD) in their file name:
 
+`python search.py -r -f "\d{4}-\d{2}-\d{2}" --file-name`
 
 ## Supported File Types
 
