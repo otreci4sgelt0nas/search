@@ -17,3 +17,41 @@ No installation is required beyond having Python installed on your system. This 
 
 To use the script, navigate to the directory containing `search.py` and run it with Python, followed by the options and search string you wish to use.
 
+
+### Options
+
+- `-i`, `--ignore-case`: Ignore case sensitivity when searching.
+- `-r`, `--regex`: Use regular expressions for searching.
+- `-f`, `--file-name`: Search for the string or pattern within file names only, not their contents.
+
+### Example
+
+To search for all Excel files with a date format (YYYY-MM-DD) in their file name:
+
+
+## Supported File Types
+
+- Text Files (*.txt)
+- CSV Files (*.csv)
+- Excel Files (*.xlsx)
+
+## Permissions
+
+The script will print a message and skip files that it does not have permission to read.
+
+## Error Handling
+
+- Files that are not valid Excel workbooks will be skipped with a message indicating the issue.
+
+## Contributing
+
+Contributions to the script are welcome. Please fork the repository, make your changes, and submit a pull request.
+
+## License
+
+[MIT License](LICENSE.txt)
+
+## Acknowledgments
+
+- Thanks to all contributors who have helped to improve this script.
+
