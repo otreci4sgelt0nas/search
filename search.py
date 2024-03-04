@@ -1,3 +1,44 @@
+"""
+Script: search.py
+
+Description:
+This script allows users to search for a specified string or regular expression pattern within the names or contents of text files (.txt), CSV files (.csv), and Excel files (.xlsx) within a directory and its subdirectories. It can ignore case sensitivity, use regular expressions, or focus on file names only for its search criteria.
+
+Usage:
+python search_tool.py [options] <search_string>
+
+Options:
+  -i, --ignore-case    Ignore case sensitivity when searching.
+  -r, --regex          Use regular expressions for searching.
+  -f, --file-name      Search for the string or pattern within file names only, not their contents.
+
+Arguments:
+  <search_string>      The text or regular expression pattern to search for within the files or their names.
+
+Supported File Types:
+- Text Files (*.txt)
+- CSV Files (*.csv)
+- Excel Files (*.xlsx)
+
+Permissions:
+- If the script encounters a file for which it doesn't have the necessary permissions to read, it will print a message indicating the permission issue and skip processing that file.
+
+Error Handling:
+- BadZipFile: If the script encounters an Excel file that is not a valid workbook, it will print a message indicating the issue and skip processing that file.
+
+Note:
+- The script recursively searches all files within the current directory and its subdirectories.
+- Ensure that the Python interpreter has the necessary permissions to read the files you intend to search or their names.
+
+Using Regex with File Names:
+- When using the `--regex` option in conjunction with the `--file-name` option, the script will apply the regex pattern to match against the names of files. This allows for complex search patterns, such as finding files with specific formats or patterns in their names.
+
+Example:
+- To find all Excel files that have a date format (YYYY-MM-DD) in their file name, you could use the following command:
+  `python search.py -r -f "\\d{4}-\\d{2}-\\d{2}" --file-name`
+  This uses a regex pattern (`\\d{4}-\\d{2}-\\d{2}`) to search for file names that match a specific date format.
+"""
+
 import os
 import sys
 import csv
