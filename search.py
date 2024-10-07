@@ -37,12 +37,7 @@ Example:
 - To find all Excel files that have a date format (YYYY-MM-DD) in their file name, you could use the following command:
   `python search.py -r -f "\\d{4}-\\d{2}-\\d{2}" --file-name`
   This uses a regex pattern (`\\d{4}-\\d{2}-\\d{2}`) to search for file names that match a specific date format.
-<<<<<<< HEAD
 
-"""
-
-
-=======
 """
 
 >>>>>>> origin/main
