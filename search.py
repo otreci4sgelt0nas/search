@@ -135,11 +135,8 @@ def main():
                     search_txt(file_path, search_string, ignore_case, use_regex)
                 elif filename.endswith('.csv'):
                     search_csv(file_path, search_string, ignore_case, use_regex)
-<<<<<<< HEAD
                 elif filename.endswith(('.xlsx', '.xlsm')): # This line checks for .xlsx and .xlsm
-=======
                 elif filename.endswith('.xlsx'):
->>>>>>> origin/main
                     search_xlsx(file_path, search_string, ignore_case, use_regex)
 
 if __name__ == "__main__":
