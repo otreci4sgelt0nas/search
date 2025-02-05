@@ -24,6 +24,7 @@ To use the script, navigate to the directory containing `search.py` and run it w
 - `-i`, `--ignore-case`: Ignore case sensitivity when searching.
 - `-r`, `--regex`: Use regular expressions for searching.
 - `-f`, `--file-name`: Search for the string or pattern within file names only, not their contents.
+- `-d`, `--directory`: Directory to start the search from (default: current directory)
 
 ### Example
 
