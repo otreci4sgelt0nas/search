@@ -11,6 +11,7 @@ Options:
   -i, --ignore-case    Ignore case sensitivity when searching.
   -r, --regex          Use regular expressions for searching.
   -f, --file-name      Search for the string or pattern within file names only, not their contents.
+  -d, --directory     Directory to start the search from (default: current directory)
 
 Arguments:
   <search_string>      The text or regular expression pattern to search for within the files or their names.
@@ -40,12 +41,12 @@ Example:
 
 """
 
->>>>>>> origin/main
 import os
 import sys
 import csv
 import re
 import openpyxl
+import argparse
 from zipfile import BadZipFile
 
 def search_txt(file_path, search_string, ignore_case, use_regex, search_in_file_name=False):
@@ -95,44 +96,46 @@ def search_xlsx(file_path, search_string, ignore_case, use_regex, search_in_file
         print(f"{file_path} is not a valid Excel workbook. Skipping...")
 
 def matches_search_criteria(text, search_string, ignore_case, use_regex):
+    if text is None:
+        return False
+    text = str(text)
     return (use_regex and re.search(search_string, text, flags=re.I if ignore_case else 0)) \
            or (ignore_case and search_string.lower() in text.lower()) \
            or (search_string in text)
 
 def main():
-    ignore_case = False
-    use_regex = False
-    search_in_file_name = False
-    search_string = ""
+    parser = argparse.ArgumentParser(description='Search for text in files with directory selection.')
+    parser.add_argument('search_string', help='The text or pattern to search for')
+    parser.add_argument('-i', '--ignore-case', action='store_true', help='Ignore case sensitivity when searching')
+    parser.add_argument('-r', '--regex', action='store_true', help='Use regular expressions for searching')
+    parser.add_argument('-f', '--file-name', action='store_true', help='Search in file names only')
+    parser.add_argument('-d', '--directory', default='.', help='Directory to start the search from (default: current directory)')
+    
+    args = parser.parse_args()
 
-    # Parsing the command-line arguments
-    for arg in sys.argv[1:]:
-        if arg == "--ignore-case" or arg == "-i":
-            ignore_case = True
-        elif arg == "--regex" or arg == "-r":
-            use_regex = True
-        elif arg == "--file-name" or arg == "-f":
-            search_in_file_name = True
-        else:
-            search_string = arg
-
-    if not search_string:
-        print("Please provide a search string or regex pattern as an argument.")
+    # Convert relative path to absolute path
+    search_dir = os.path.abspath(args.directory)
+    
+    if not os.path.exists(search_dir):
+        print(f"Error: Directory '{search_dir}' does not exist.")
         sys.exit(1)
-
-    for dirpath, dirnames, filenames in os.walk("."):
+        
+    print(f"Searching in directory: {search_dir}")
+    print(f"Search string: {args.search_string}")
+    print(f"Options: ignore_case={args.ignore_case}, regex={args.regex}, file_name_only={args.file_name}")
+    
+    for dirpath, dirnames, filenames in os.walk(search_dir):
         for filename in filenames:
             file_path = os.path.join(dirpath, filename)
-            if search_in_file_name:
-                search_txt(file_path, search_string, ignore_case, use_regex, search_in_file_name)
+            if args.file_name:
+                search_txt(file_path, args.search_string, args.ignore_case, args.regex, args.file_name)
             else:
                 if filename.endswith('.txt'):
-                    search_txt(file_path, search_string, ignore_case, use_regex)
+                    search_txt(file_path, args.search_string, args.ignore_case, args.regex)
                 elif filename.endswith('.csv'):
-                    search_csv(file_path, search_string, ignore_case, use_regex)
-                elif filename.endswith(('.xlsx', '.xlsm')): # This line checks for .xlsx and .xlsm
-                elif filename.endswith('.xlsx'):
-                    search_xlsx(file_path, search_string, ignore_case, use_regex)
+                    search_csv(file_path, args.search_string, args.ignore_case, args.regex)
+                elif filename.endswith(('.xlsx', '.xlsm')):
+                    search_xlsx(file_path, args.search_string, args.ignore_case, args.regex)
 
 if __name__ == "__main__":
     main()
